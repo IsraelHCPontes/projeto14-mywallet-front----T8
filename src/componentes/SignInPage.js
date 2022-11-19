@@ -38,9 +38,6 @@ export default function SignInPage(){
 
         try{
             const response = await postSignIn(body);
-
-            console.log(response.data.token);
-
             setForm({ 
             email: '',
             password:''})
