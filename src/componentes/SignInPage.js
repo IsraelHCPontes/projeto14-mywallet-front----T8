@@ -1,7 +1,7 @@
 import { Link, useParams, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { useContext,useState } from "react"
-import {UserContext} from '../contexts/UserContext';
+import {TokenContext} from '../contexts/UserContext';
 import { Button } from "./common/Button";
 import Form from "./common/Form";
 import { postSignIn } from "../services/MyWallet"
@@ -11,50 +11,49 @@ export default function SignInPage(){
     const [disabled, setDesibled] = useState(false)
     const navigate = useNavigate()
     const { signIn } = useParams()
+    const {token, setToken} =  useContext(TokenContext)
+   
 
     const [form, setForm] = useState({
         email:'',
         password:''
     })
 
-    function sendForm(e) {
-        e.preventDefault()
-        const body ={
-            ...form
-        }
-        
-       
-        setDesibled(true)
-
-        postSignIn(body).then(res => 
-        {console.log('deu bom', res);
-        setForm({ 
-        email: '',
-        password:''})
-        
-        const stringImg = JSON.stringify(res.data.image)  
-        localStorage.setItem('useImg', stringImg)
-        
-        
-        
-        const stringData = JSON.stringify(res.data)  
-        localStorage.setItem('useData', stringData) 
-        navigate('/hoje'); 
-    })
-
-        postSignIn(body).catch(({response}) => 
-        {alert(response.data.message);
-         setDesibled(false)})
-    }
-
-
     function handleForm(e){
+        e.preventDefault()
         console.log(e.target.name, e.target.value )
         setForm({
             ...form,
             [e.target.name]: e.target.value
         })
     }
+    
+    async function sendForm(e) {
+        e.preventDefault()
+        const body ={
+            ...form
+        }
+        
+        setDesibled(true)
+
+        try{
+            const response = await postSignIn(body);
+
+            console.log(response.data.token);
+
+            setForm({ 
+            email: '',
+            password:''})
+
+            setToken(response.data.token)  
+
+            navigate('/wallet'); 
+        }catch({response}){
+             alert(response.data.message);
+             setDesibled(false)
+        }
+    }
+
     
 
   return (
@@ -83,14 +82,12 @@ export default function SignInPage(){
 
                 <Button type='submit'> Entrar </Button>
          </Form>
-         <Link to={`/cadastro`}>
+         <Link to={`/sign-up`}>
          <RodaPe>Primeira vez? Cadastre-se!</RodaPe>
          </Link>
     </Wrapper>
-  
+  )}
 
-  )  
-}
 
 const Wrapper = styled.div`
     margin-top: 259px;
@@ -129,7 +126,5 @@ const RodaPe = styled.h3`
     text-align: left;
     margin-top:36px;
     color: #ffffff;
-
-
 `
 
