@@ -1,18 +1,20 @@
 import { createContext, useState } from "react";
 
-export const TokenContext = createContext({});
+export const userContext = createContext({});
+
+
 
 function UserProvider({children}){
-    
+    const [userName, setUsername] = useState("")
 
     const imgProfile= JSON.parse(localStorage.getItem('useImg'))
-    const [token, setToken] = useState('')
-
+    console.log('to no privado',userName)
+   
     console.log(imgProfile)
     return(
-            <TokenContext.Provider value={{token, setToken}}>
+            <userContext.Provider value={{userName, setUsername}}>
                 {children}
-            </TokenContext.Provider>
+            </userContext.Provider>
          )
 }
 

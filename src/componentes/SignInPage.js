@@ -1,7 +1,7 @@
 import { Link, useParams, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { useContext,useState } from "react"
-import {TokenContext} from '../contexts/UserContext';
+import {userContext} from '../contexts/UserContext';
 import { Button } from "./common/Button";
 import Form from "./common/Form";
 import { postSignIn } from "../services/MyWallet"
@@ -10,10 +10,9 @@ import { postSignIn } from "../services/MyWallet"
 export default function SignInPage(){
     const [disabled, setDesibled] = useState(false)
     const navigate = useNavigate()
-    const { signIn } = useParams()
-    const {token, setToken} =  useContext(TokenContext)
-   
 
+    const {setUsername} = useContext(userContext)
+    
     const [form, setForm] = useState({
         email:'',
         password:''
@@ -41,9 +40,8 @@ export default function SignInPage(){
             setForm({ 
             email: '',
             password:''})
-
-            setToken(response.data.token)  
-
+            localStorage.setItem('myWallet', JSON.stringify({token: response.data.token})) 
+            setUsername(response.data.name)
             navigate('/wallet'); 
         }catch({response}){
              alert(response.data.message);

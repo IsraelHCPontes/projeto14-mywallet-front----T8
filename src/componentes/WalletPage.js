@@ -1,18 +1,67 @@
-
+import React, { useState, useEffect, useContext } from 'react';
 import styled from "styled-components"
- 
+import {getTransactions} from '../services/MyWallet';
+import {userContext} from '../contexts/UserContext';
 
 
 export default function Wallet(){
+    const [transactions, setTransactions] = useState([]);
+    const [saldo, setSaldo] = useState(0)
+    const {userName} = useContext(userContext)
+    console.log('to no comeco',userName)
+
+    useEffect( () => {
+        async function fetchData(){
+            try{
+                const res = await getTransactions();
+                setTransactions(res.data)
+                setSaldo(res.data[res.data.length-1].saldo)
+                console.log('to dentro', res.data);
+            }catch(error){
+                console.log(error.data)
+            }
+        }
+        fetchData();
+    },[])
+    
+    
+
+    console.log('to fora', transactions);
+
+    function TransactionsList(){
+     return  transactions.map(transaction => {
+            return(
+                <>
+                    <Transactions>
+                            <TransactionLeft>
+                                <Date>{transaction.date}</Date>
+                                <Title>{transaction.title}</Title>
+                            </TransactionLeft>
+                                <TransactionRigth>
+                                <Value type={transaction.type} >{transaction.valor}</Value>
+                            </TransactionRigth>
+                    </Transactions>
+                    <Balance>
+                        <BalanceLeft>SALDO</BalanceLeft>
+                        <BalanceRigth cor={saldo}>{saldo}</BalanceRigth>
+                    </Balance>
+                </>
+            )
+        })
+    }
+
+    const teste = true;
     return(
         <Wrapper>
             <Top>
-                <h2>Olá, Fulano</h2>
+                <h2>Olá, {userName}</h2>
                 <ion-icon name="log-out-outline"></ion-icon>
             </Top>
-            <TransactionScreen>
-                <h3>Não há registros de entrada ou saída</h3>
-            </TransactionScreen>
+            <ContainerTransaction>
+                <TransactionScreen>
+                       {transactions.length === 0?<Texto><h3>Não há registros de entrada ou saídas</h3> </Texto>: <TransactionsList/> }
+                </TransactionScreen>
+            </ContainerTransaction>
             <BarBotom>
                 <ButtonLeft>
                     <ion-icon name="add-circle-outline"></ion-icon>
@@ -52,12 +101,9 @@ const Top = styled.div`
         height:26px;
         color: #ffffff;
     }
-
-
 `
 
-const TransactionScreen = styled.div`
-
+const ContainerTransaction = styled.div`
         height: 446px;
         width: 326px;
         border-radius: 5px;
@@ -66,7 +112,7 @@ const TransactionScreen = styled.div`
         display: flex;
         justify-content: center;
         align-items:center;
-
+        position:relative;
 
     h3{
         width:180px;
@@ -78,8 +124,80 @@ const TransactionScreen = styled.div`
         letter-spacing: 0em;
         text-align: center;
         color: #868686;
-
     }
+`
+
+const TransactionScreen = styled.div`
+    width: 310px;
+    height: 415px;
+`
+const Texto = styled.div`
+     height: 446px;
+     width: 326px;
+     top:0px;
+     left:0px;
+     display:flex;
+     justify-content: center;
+     align-items: center;
+     position:absolute;
+     z-index: 1;
+
+`
+
+const Transactions = styled.div`
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+`
+
+const TransactionLeft = styled.div`
+     display: flex;
+`
+const TransactionRigth = styled.div`
+   
+`
+
+const Date = styled.div`
+    font-family: Raleway;
+    font-size: 17px;
+    font-weight: 400;
+    color: #C6C6C6;
+`
+const Title =styled.div`
+    margin-left: 10px;
+    font-family: Raleway;
+    font-size: 16px;
+    font-weight: 400;
+`
+
+const Value =styled.div`
+    font-family: Raleway;
+    font-size: 16px;
+    font-weight: 400;
+    color:${props => props.type === "-"?  '#C70000':'#03AC00'};
+`
+
+const Balance = styled.div`
+    width: 310px;
+    display:flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 10px;
+`
+
+const BalanceRigth = styled.div`
+    font-family: Raleway;
+    font-size: 17px;
+    font-weight: 400;
+    color:${({cor}) => cor > 0?'#03AC00' : '#C70000'}
+`
+
+const BalanceLeft = styled.div`
+    font-family: Raleway;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: left;
+
 `
 
 const BarBotom = styled.div`
@@ -87,7 +205,6 @@ const BarBotom = styled.div`
     display: flex;
     justify-content: space-around;
 `
-
 
 const ButtonLeft = styled.button`
     margin-top:14px;
