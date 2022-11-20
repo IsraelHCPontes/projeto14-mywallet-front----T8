@@ -7,7 +7,7 @@ import {userContext} from '../contexts/UserContext';
 export default function Wallet(){
     const [transactions, setTransactions] = useState([]);
     const [saldo, setSaldo] = useState(0)
-    const {userName} = useContext(userContext)
+    const {userName, setUsername} = useContext(userContext)
     console.log('to no comeco',userName)
 
     useEffect( () => {
@@ -15,6 +15,7 @@ export default function Wallet(){
             try{
                 const res = await getTransactions();
                 setTransactions(res.data)
+                setUsername(res.data[0].name)
                 setSaldo(res.data[res.data.length-1].saldo)
                 console.log('to dentro', res.data);
             }catch(error){
@@ -97,8 +98,8 @@ const Top = styled.div`
     }
 
     ion-icon{
-        width:27px;
-        height:26px;
+        width:32px;
+        height:31px;
         color: #ffffff;
     }
 `
