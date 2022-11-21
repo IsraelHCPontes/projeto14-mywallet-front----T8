@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://mywallet-api-iw3e.onrender.com'
+const BASE_URL = 'https://mywallet-1tvr.onrender.com'
 
 function creatHeaders(){
   const auth = JSON.parse(localStorage.getItem("myWallet"));
