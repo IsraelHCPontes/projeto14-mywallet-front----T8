@@ -2,30 +2,27 @@ import styled from "styled-components";
 
 const Button  = styled.button`
 
-           height: 58px;
-           width: 326px;
-           left: 25px;
-           top: 233px;
-           border-radius: 5px;
-
-          
-            border: none;
-          
-            background: #A328D6;
-
-            border-radius: 4.63636px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            
-            font-family: 'Raleway', sans-serif;
+        height: 58px;
+        width: 326px;
+        left: 25px;
+        top: 233px;
+        border-radius: 5px;  
+        border: none;  
+        background: #A328D6;
+        border-radius: 4.63636px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Raleway', sans-serif;
         font-size: 20px;
         font-weight: 700;
         line-height: 23px;
         letter-spacing: 0em;
         text-align: left;
-
-            color: #ffffff;
+        color: #ffffff;
+        &:hover{
+            cursor: pointer;
+        }
 `
 const ButtonFacke =styled.div`  height: 45px;
         width: 303px;

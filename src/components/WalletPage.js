@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import styled from "styled-components"
 import {getTransactions} from '../services/MyWallet';
 import {userContext} from '../contexts/UserContext';
@@ -9,7 +9,7 @@ export default function Wallet(){
     const [transactions, setTransactions] = useState([]);
     const [saldo, setSaldo] = useState(0)
     const {userName, setUsername} = useContext(userContext)
-    console.log('to no comeco',userName)
+    const navigate = useNavigate()
 
     useEffect( () => {
         async function fetchData(){
@@ -26,7 +26,10 @@ export default function Wallet(){
         fetchData();
     },[])
     
-    
+    function logOut(){  
+        localStorage.clear('myWallet');
+        navigate("/sign-in");
+    }
 
     console.log('to fora', transactions);
 
@@ -57,7 +60,7 @@ export default function Wallet(){
         <Wrapper>
             <Top>
                 <h2>Olá, {userName}</h2>
-                <ion-icon name="log-out-outline"></ion-icon>
+                <ion-icon onClick={() => logOut()} name="log-out-outline"></ion-icon>
             </Top>
             <ContainerTransaction>
                 <TransactionScreen>
@@ -106,6 +109,9 @@ const Top = styled.div`
         width:32px;
         height:31px;
         color: #ffffff;
+        &:hover{
+            cursor: pointer;
+        }
     }
 `
 

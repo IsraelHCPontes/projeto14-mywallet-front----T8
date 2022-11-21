@@ -106,8 +106,8 @@ export default function SingUpPage(){
 
              </Form>
 
-             <Link to={`/singUp`}>
-                 <RodaPe>Não tem uma conta? Cadastre-se!</RodaPe>
+             <Link to={`/sign-in`}>
+                 <RodaPe>Já tem uma conta? Entre agora!!</RodaPe>
              </Link>
         </Wrapper>
     )
