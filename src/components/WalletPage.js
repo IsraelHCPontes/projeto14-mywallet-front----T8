@@ -39,7 +39,7 @@ export default function Wallet(){
                 <>
                     <Transactions>
                             <TransactionLeft>
-                                <Date>{transaction.date}</Date>
+                                <Data>{transaction.date}</Data>
                                 <Title>{transaction.title}</Title>
                             </TransactionLeft>
                                 <TransactionRigth>
@@ -168,11 +168,10 @@ const Transactions = styled.div`
 const TransactionLeft = styled.div`
      display: flex;
 `
-const TransactionRigth = styled.div`
-   
+const TransactionRigth = styled.div`  
 `
 
-const Date = styled.div`
+const Data = styled.div`
     font-family: Raleway;
     font-size: 17px;
     font-weight: 400;
