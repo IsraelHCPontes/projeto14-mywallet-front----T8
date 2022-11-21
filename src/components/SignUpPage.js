@@ -21,7 +21,7 @@ export default function SingUpPage(){
 
     function handleForm(e){
         e.preventDefault()
-        console.log(e.target.name, e.target.value )
+        // console.log(e.target.name, e.target.value )
         setForm({
             ...form,
             [e.target.name]: e.target.value
