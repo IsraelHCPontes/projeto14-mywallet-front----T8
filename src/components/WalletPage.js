@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import {Link} from 'react-router-dom'
 import styled from "styled-components"
 import {getTransactions} from '../services/MyWallet';
 import {userContext} from '../contexts/UserContext';
@@ -64,10 +65,12 @@ export default function Wallet(){
                 </TransactionScreen>
             </ContainerTransaction>
             <BarBotom>
+            <Link to={"/newaddpage"}>
                 <ButtonLeft>
-                    <ion-icon name="add-circle-outline"></ion-icon>
+                     <ion-icon name="add-circle-outline"></ion-icon>
                     <h3>Nova entrada</h3>
                 </ButtonLeft>
+                </Link>
                 <ButtonRigh>
                     <ion-icon name="remove-circle-outline"></ion-icon>
                     <h3>Nova saída</h3>
@@ -131,6 +134,9 @@ const ContainerTransaction = styled.div`
 const TransactionScreen = styled.div`
     width: 310px;
     height: 415px;
+    margin-bottom: 30px;
+    overflow: hidden scroll;
+
 `
 const Texto = styled.div`
      height: 446px;
@@ -190,7 +196,7 @@ const BalanceRigth = styled.div`
     font-family: Raleway;
     font-size: 17px;
     font-weight: 400;
-    color:${({cor}) => cor > 0?'#03AC00' : '#C70000'}
+    color:${({cor}) => cor > 0?'#03AC00' : '#C70000'};
 `
 
 const BalanceLeft = styled.div`
@@ -215,6 +221,10 @@ const ButtonLeft = styled.button`
     border: none;
     background: #A328D6;
     border-radius: 5px;
+    &:hover{
+        cursor: pointer;
+    }
+
         
      h3{
         margin-top:30px;
@@ -243,6 +253,9 @@ const ButtonRigh = styled.button`
         border: none;
         background: #A328D6;
         border-radius: 5px;
+        &:hover{
+        cursor: pointer;
+        }
 
         h3{
         margin-top:30px;

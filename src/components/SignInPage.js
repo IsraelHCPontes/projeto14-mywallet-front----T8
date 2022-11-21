@@ -42,7 +42,7 @@ export default function SignInPage(){
             password:''})
             localStorage.setItem('myWallet', JSON.stringify({token: response.data.token})) 
             setUsername(response.data.name)
-            navigate('/wallet'); 
+            navigate('/'); 
         }catch({response}){
              alert(response.data.message);
              setDesibled(false)

@@ -30,8 +30,15 @@ function postSignIn(body) {
      return promise;
  }  
 
+ function postNewAdd(body) {
+  const config = creatHeaders();
+  const promise = axios.post(`${BASE_URL}/transactions`,body,config);
+  return promise;
+} 
+
 export {
     postSignIn,
     postSignUp,
-    getTransactions
+    getTransactions,
+    postNewAdd
  };
