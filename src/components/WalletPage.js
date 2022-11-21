@@ -70,11 +70,13 @@ export default function Wallet(){
                      <ion-icon name="add-circle-outline"></ion-icon>
                     <h3>Nova entrada</h3>
                 </ButtonLeft>
-                </Link>
+            </Link>
+            <Link to={"/newdebitpage"}>
                 <ButtonRigh>
                     <ion-icon name="remove-circle-outline"></ion-icon>
                     <h3>Nova saída</h3>
                 </ButtonRigh>
+             </Link>    
             </BarBotom>
         </Wrapper> 
     )
